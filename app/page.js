@@ -17,6 +17,9 @@ export default function Page() {
           <li className="p-2 justify-between">
           <Link href="/week-5">Week 5</Link>
           </li>
+          <li className="p-2 justify-between">
+          <Link href="/week-6">Week 6</Link>
+          </li>
         </ul>
       </main>
     );
