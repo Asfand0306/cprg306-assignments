@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import Item from './item';
 
-const ItemList = ({items}) => {
+const ItemList = ({ items, onItemSelect }) => {
     const [sortBy, setSortBy] = useState("name");
     const [groupByCategory, setGroupByCategory] = useState(false);
     
@@ -73,7 +73,8 @@ const ItemList = ({items}) => {
                                             key={item.id} 
                                             name={item.name} 
                                             quantity={item.quantity} 
-                                            category={item.category} 
+                                            category={item.category}
+                                            onSelect={() => onItemSelect(item)}
                                         />
                                     ))}
                             </ul>
@@ -88,7 +89,8 @@ const ItemList = ({items}) => {
                             key={item.id} 
                             name={item.name} 
                             quantity={item.quantity} 
-                            category={item.category} 
+                            category={item.category}
+                            onSelect={() => onItemSelect(item)}
                         />
                     ))}
                 </ul>
