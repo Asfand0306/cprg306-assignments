@@ -30,11 +30,11 @@ const ItemList = ({ items, onItemSelect }) => {
     const sortedCategories = Object.keys(groupedItems).sort();
 
     return (
-        <div className="mt-8 flex flex-col items-center">
-            <div className="flex items-center mb-4">
-                <span className="mr-2 text-lg">Sort by:</span>
+        <div className="w-full max-w-md mx-auto">
+            <div className="flex flex-wrap justify-center gap-2 mb-6">
+                <span className="text-lg mr-2">Sort by:</span>
                 <button 
-                    className={`px-3 py-1 mr-2 rounded-md ${sortBy === "name" && !groupByCategory ? 'bg-green-500 text-white' : 'bg-zinc-700'}`}
+                    className={`px-3 py-1 rounded-md ${sortBy === "name" && !groupByCategory ? 'bg-green-500 text-white' : 'bg-zinc-700 hover:bg-zinc-600'}`}
                     onClick={() => {
                         setSortBy("name");
                         setGroupByCategory(false);
@@ -43,7 +43,7 @@ const ItemList = ({ items, onItemSelect }) => {
                     Name
                 </button>
                 <button 
-                    className={`px-3 py-1 mr-2 rounded-md ${sortBy === "category" && !groupByCategory ? 'bg-green-500 text-white' : 'bg-zinc-700'}`}
+                    className={`px-3 py-1 rounded-md ${sortBy === "category" && !groupByCategory ? 'bg-green-500 text-white' : 'bg-zinc-700 hover:bg-zinc-600'}`}
                     onClick={() => {
                         setSortBy("category");
                         setGroupByCategory(false);
@@ -52,7 +52,7 @@ const ItemList = ({ items, onItemSelect }) => {
                     Category
                 </button>
                 <button 
-                    className={`px-3 py-1 rounded-md ${groupByCategory ? 'bg-green-500 text-white' : 'bg-zinc-700'}`}
+                    className={`px-3 py-1 rounded-md ${groupByCategory ? 'bg-green-500 text-white' : 'bg-zinc-700 hover:bg-zinc-600'}`}
                     onClick={() => setGroupByCategory(true)}
                 >
                     Group by Category
@@ -61,11 +61,11 @@ const ItemList = ({ items, onItemSelect }) => {
 
             {groupByCategory ? (
                 // Render grouped items
-                <div>
+                <div className="w-full">
                     {sortedCategories.map(category => (
                         <div key={category} className="mb-8">
-                            <h2 className="text-xl font-bold text-emerald-500 capitalize mb-2">{category}</h2>
-                            <ul>
+                            <h2 className="text-xl font-bold text-emerald-500 capitalize mb-4 bg-zinc-800 p-2 rounded-lg text-center">{category}</h2>
+                            <ul className="w-full">
                                 {groupedItems[category]
                                     .sort((a, b) => a.name.localeCompare(b.name))
                                     .map(item => (
@@ -83,7 +83,7 @@ const ItemList = ({ items, onItemSelect }) => {
                 </div>
             ) : (
                 // Render sorted items (original display)
-                <ul>
+                <ul className="w-full">
                     {sortedItems.map((item) => (
                         <Item 
                             key={item.id} 

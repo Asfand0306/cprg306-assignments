@@ -90,22 +90,30 @@ export default function MealIdeas({ ingredient }) {
   }, [ingredient]);
 
   return (
-    <div className="flex flex-col items-center w-full max-w-md mx-auto bg-zinc-800 p-6 rounded-lg">
-      <h2 className="text-xl font-bold mb-4">
+    <div className="w-full max-w-md mx-auto bg-zinc-800 p-6 rounded-lg shadow-lg">
+      <h2 className="text-xl font-bold mb-6 text-center text-emerald-400">
         Meal Ideas for {ingredient || "..."}
       </h2>
       
-      {loading && <p className="text-emerald-400">Loading...</p>}
+      {loading && (
+        <div className="text-center py-8">
+          <p className="text-emerald-400 text-lg">Loading...</p>
+        </div>
+      )}
       
       {!loading && !ingredient && (
-        <p className="text-gray-400 italic">Select an item to see meal ideas</p>
+        <div className="text-center py-12">
+          <p className="text-gray-400 italic">Select an item to see meal ideas</p>
+        </div>
       )}
       
       {!loading && ingredient && meals.length === 0 && (
-        <p className="text-gray-400 italic">No meal ideas found for {ingredient}</p>
+        <div className="text-center py-12">
+          <p className="text-gray-400 italic">No meal ideas found for {ingredient}</p>
+        </div>
       )}
       
-      <div className="w-full grid grid-cols-1 gap-6">
+      <div className="w-full">
         {/* Show ingredients if a meal is selected */}
         {selectedMeal && (
           <div className="mb-6 bg-zinc-700 p-4 rounded-lg">
@@ -122,7 +130,7 @@ export default function MealIdeas({ ingredient }) {
             {ingredients.length === 0 && !loading ? (
               <p className="italic text-gray-400">No ingredients information available</p>
             ) : (
-              <ul className="list-disc pl-5 space-y-1">
+              <ul className="list-disc pl-5 space-y-1 bg-zinc-800 p-4 rounded-lg">
                 {ingredients.map((item, index) => (
                   <li key={index} className="text-sm">
                     {item.ingredient} - {item.measure}
@@ -133,7 +141,7 @@ export default function MealIdeas({ ingredient }) {
             
             <button 
               onClick={() => setSelectedMeal(null)} 
-              className="mt-4 text-sm bg-zinc-600 hover:bg-zinc-500 py-1 px-3 rounded-lg"
+              className="mt-4 text-sm bg-zinc-600 hover:bg-zinc-500 py-2 px-4 rounded-lg w-full"
             >
               Back to meal list
             </button>
@@ -141,7 +149,7 @@ export default function MealIdeas({ ingredient }) {
         )}
         
         {/* Show meal list if no meal is selected */}
-        {!selectedMeal && (
+        {!selectedMeal && meals.length > 0 && (
           <ul className="w-full space-y-3">
             {meals.map((meal) => (
               <li 
