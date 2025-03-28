@@ -2,26 +2,48 @@
 import ItemList from './item-list.js';
 import NewItem from './new-item.js';
 import MealIdeas from './meal-ideas.js';
-import itemData from './items.json';
 import { useState, useEffect } from 'react';
 import { useUserAuth } from '../_utils/auth-context';
 import { useRouter } from 'next/navigation';
+import { getItems, addItem } from '../_services/shopping-list-service';
 
 export default function Page() {
-    const [items, setItems] = useState(itemData);
+    const [items, setItems] = useState([]); // Removed itemData import and initialized as empty array
     const [selectedItemName, setSelectedItemName] = useState('');
     const { user } = useUserAuth();
     const router = useRouter();
 
+    // Load items when component mounts or user changes
+    useEffect(() => {
+        if (user) {
+            loadItems();
+        }
+    }, [user]);
+
+    const loadItems = async () => {
+        try {
+            const fetchedItems = await getItems(user.uid);
+            setItems(fetchedItems);
+        } catch (error) {
+            console.error("Failed to load items:", error);
+        }
+    };
+
     // Check if user is logged in
     useEffect(() => {
         if (!user) {
-            router.push('/week-9'); // Redirect to landing page if not logged in
+            router.push('/week-10'); // Redirect to landing page if not logged in
         }
     }, [user, router]);
 
-    const handleAddItem = (item) => {
-        setItems([...items, item]);
+    const handleAddItem = async (item) => {
+        try {
+            const newItemId = await addItem(user.uid, item);
+            const newItemWithId = { ...item, id: newItemId };
+            setItems([...items, newItemWithId]);
+        } catch (error) {
+            console.error("Failed to add item:", error);
+        }
     };
 
     const handleItemSelect = (item) => {
